@@ -13,7 +13,7 @@ export default function AdminLoginForm() {
         console.log("Password:", password);
 
         try {
-            const response = await fetch("http://localhost:5000/auth/admins", {
+          let response = await fetch(`https://beneficiary-management-backend-gkik5ua44.vercel.app/auth/login`,{
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
