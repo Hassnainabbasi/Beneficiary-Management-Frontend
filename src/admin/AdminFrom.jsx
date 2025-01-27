@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../constants";
 
 export default function AdminLoginForm() {
     const [email, setEmail] = useState("");
@@ -13,15 +14,16 @@ export default function AdminLoginForm() {
         console.log("Password:", password);
 
         try {
-          let response = await fetch(`https://beneficiary-management-backend-gkik5ua44.vercel.app/auth/login`,{
+          let response = await fetch(`${BASE_URL}/auth/admins`,{
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({email,password}),
               });
-        
+             console.log(response)
               const result = await response.json();      
+              console.log(result)
               if(response.ok){
              Swal.fire("Assistance details updated successfully!");
              navigate('/admin')
@@ -30,7 +32,7 @@ export default function AdminLoginForm() {
                 alert(result.message || "Failed to update assistance details.");
               }
         } catch (error) {
-            console.log(error)
+            console.log(error.message)
         }
       };
     

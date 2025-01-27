@@ -1,6 +1,7 @@
 import { useState } from "react";
 import {  useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../constants";
 
 const Reception = () => {
   const generateToken = () => Math.floor(1000 + Math.random() * 9000);
@@ -25,7 +26,7 @@ const Reception = () => {
     console.log("formdata==>>>", { ...formData, tokenNo: newToken });
 
     try {
-      const response = await fetch("http://localhost:5000/auth/register", {
+      const response = await fetch(`${BASE_URL}/auth/register`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

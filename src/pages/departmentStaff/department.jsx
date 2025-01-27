@@ -1,5 +1,7 @@
+import { Download } from "lucide-react";
 import { useState } from "react";
 import Swal from "sweetalert2";
+import { BASE_URL } from "../../constants";
 
 const StaffForm = () => {
   const [token, setToken] = useState("");
@@ -8,6 +10,8 @@ const StaffForm = () => {
   const [remarks, setRemarks] = useState("");
   const [error, setError] = useState("");
   const [showReceipt, setShowReceipt] = useState(false);
+  const [detail ,setDetail] = useState('')
+  const [data, setData] = useState('')
 
   const fetchBeneficiaryInfo = async () => {
     if (!token.trim()) {
@@ -16,15 +20,17 @@ const StaffForm = () => {
     }
     setError("");
     try {
-      const response = await fetch("http://localhost:5000/auth/departmentStaff", {
+      const response = await fetch(`${BASE_URL}/auth/departmentStaff`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({ tokenNo: token }),
       });
-
+     console.log(response)
       const result = await response.json();
+      console.log(result)
+      setDetail(result)
       if (response.ok) {
         setBeneficiaryInfo(result.userData);
         setError("");
@@ -39,7 +45,7 @@ const StaffForm = () => {
   };
 
   const handleDownloadReceipt = () => {
-    const receiptContent = `Receipt\n\nToken Number: ${token}\nStatus: ${status}\nRemarks: ${remarks}\n\nBeneficiary Information:\nName: ${beneficiaryInfo?.name}\nAddress: ${beneficiaryInfo?.address}\nCNIC: ${beneficiaryInfo?.cnic}\nAssistance Type: ${beneficiaryInfo?.assistanceType}`;
+    const receiptContent = `Receipt\n\nToken Number: ${detail.userData.tokenNo}\nStatus: ${data.data.updateStatus}\nRemarks: ${data.data.remarks}\n\nBeneficiary Information:\nName: ${detail.userData?.name}\nAddress: ${detail.userData?.address}\nCNIC: ${detail.userData?.cnic}\nAssistance Type: ${detail.userData?.purpose}`;
 
     const blob = new Blob([receiptContent], { type: "text/plain" });
     const url = URL.createObjectURL(blob);
@@ -68,15 +74,16 @@ const StaffForm = () => {
       };
 
       // Make API call
-      const response = await fetch("http://localhost:5000/auth/userClear", {
+      const response = await fetch(`${BASE_URL}/auth/userClear`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(payload),
       });
-
       const result = await response.json();
+      console.log(result)
+      setData(result)
 
       if (response.ok) {
         setShowReceipt(true);
@@ -190,16 +197,16 @@ const StaffForm = () => {
               }}
             >
               <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                <strong>Name:</strong> {beneficiaryInfo.name}
+                <strong>Name:</strong> {detail.userData.name}
               </p>
               <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                <strong>Address:</strong> {beneficiaryInfo.address}
+                <strong>Address:</strong> {detail.userData.address}
               </p>
               <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                <strong>CNIC:</strong> {beneficiaryInfo.cnic}
+                <strong>CNIC:</strong> {detail.userData.cnic}
               </p>
               <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                <strong>Assistance Type:</strong> {beneficiaryInfo.purpose}
+                <strong>Assistance Type:</strong> {detail.userData.purpose}
               </p>
             </div>
           )}
@@ -274,57 +281,64 @@ const StaffForm = () => {
           </div>
         </form>
 
-        {showReceipt && (
+        {/* {showReceipt && (
           <div
             style={{
               marginTop: "1rem",
               padding: "1rem",
-              backgroundColor: "#f9fafb",
-              border: "1px solid #d1d5db",
               borderRadius: "4px",
             }}
           >
-            <h3 style={{ fontSize: "1rem", color: "#374151" }}>Receipt</h3>
-            <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-              <strong>Token Number:</strong> {token}
-            </p>
-            <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-              <strong>Status:</strong> {status}
-            </p>
-            <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-              <strong>Remarks:</strong> {remarks}
-            </p>
-            {beneficiaryInfo && (
-              <div>
-                <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                  <strong>Beneficiary Information:</strong>
-                </p>
-                <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                  Name: {beneficiaryInfo.name}
-                </p>
-                <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                  Address: {beneficiaryInfo.address}
-                </p>
-                <p style={{ fontSize: "0.875rem", color: "#374151" }}>
-                  CNIC: {beneficiaryInfo.cnic}
-                </p>
-              </div>
-            )}
+            
+            <img src="https://icon-library.com/images/receipts-icon/receipts-icon-12.jpg"  className="w-10" alt="" />
             <button
-              onClick={handleDownloadReceipt}
-              style={{
-                padding: "0.5rem 1rem",
-                backgroundColor: "#3b82f6",
-                color: "#ffffff",
-                border: "none",
-                borderRadius: "4px",
-                cursor: "pointer",
-              }}
-            >
-              Download Receipt
-            </button>
-          </div>
-        )}
+      onClick={handleDownloadReceipt}
+      style={{
+        textAlign : "center"
+         }}
+    >
+      <Download size={16} />
+       </button>
+              </div>
+        )} */}
+        {showReceipt && (
+  <div
+    style={{
+      marginTop: "1rem",
+      padding: "1rem",
+      borderRadius: "8px",
+      boxShadow: "0 4px 8px rgba(0, 0, 0, 0.1)",
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      gap: "1rem",
+    }}
+  >
+    <button
+      onClick={handleDownloadReceipt}
+      style={{
+        textAlign: "center",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        backgroundColor: "black",
+        color: "#fff",
+        border: "none",
+        borderRadius: "4px",
+        padding: "0.5rem 1rem",
+        cursor: "pointer",
+        fontSize: "1rem",
+        transition: "background-color 0.3s",
+      }}
+      onMouseOver={(e) => (e.target.style.backgroundColor = "#45a049")}
+      onMouseOut={(e) => (e.target.style.backgroundColor = "#4CAF50")}
+    >
+      <Download size={16} style={{ marginRight: "0.5rem" }} />
+      Download Receipt
+    </button>
+  </div>
+)}
+
       </div>
     </div>
   );
