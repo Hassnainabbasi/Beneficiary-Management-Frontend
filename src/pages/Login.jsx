@@ -15,7 +15,7 @@ export default function Login() {
        
         const userRegisterdata = { email ,password}
         try {
-            let response = await fetch(``,{
+            let response = await fetch(`https://beneficiary-management-backend-gkik5ua44.vercel.app/auth/login`,{
                 method : "POST",
                  headers: {
                     'Content-Type': 'application/json',
