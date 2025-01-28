@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import Customer from './Customer';
 import StaffForm from '../pages/departmentStaff/department';
 import { BASE_URL } from '../constants';
 import ManageUser from './ManageUser';
@@ -182,6 +181,7 @@ export default function AdminDashboard() {
   const [userData, setUserdata] = useState([]);
   const [detail, setDetail] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [ActiverUserDetail , setActiverUserDetail] = useState([])
 
   const handleLinkClick = (component) => {
     setActiveComponent(component);
@@ -207,6 +207,28 @@ export default function AdminDashboard() {
     }
   };
 
+   const fetchAllInfo = async () => {
+    try {
+      const response = await fetch(`${BASE_URL}/auth/onlineUsers`, {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
+      console.log(response)
+      const result = await response.json();
+      console.log(result)
+      setActiverUserDetail(result);
+      if (response.ok) {
+        setUserdata(result.userData);
+      } else {
+        setUserdata(null);
+      }
+    } catch (error) {
+      console.error("Error fetching UserData info:", error);
+    }
+  };
+
   const handleSearch = () => {
     const filteredData = detail.filter(user => 
       user.cnic.includes(searchTerm) || user.phone.includes(searchTerm)
@@ -218,8 +240,13 @@ export default function AdminDashboard() {
     fetchBeneficiaryInfo();
   }, []); 
 
+  useEffect(() => {
+    fetchAllInfo();
+  }, []); 
+
+
   return (
-    <div className="h-screen flex overflow-hidden flex-col lg:flex-row">
+    <div className="h-screen flex overflow-hidden flex-col lg:flex-row fixed">
       <div className="bg-gray-900 text-white w-full lg:w-64 p-4 fixed lg:static top-0 left-0 h-full lg:h-auto">
         <div className="text-2xl font-bold mb-6">Admin Dashboard</div>
         <nav>
@@ -229,11 +256,7 @@ export default function AdminDashboard() {
                 <i className="fas fa-users mr-2"></i> Overview
               </button>
             </li>
-            <li>
-              <button onClick={() => handleLinkClick('customers')} className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300">
-                <i className="fas fa-users mr-2"></i> Customers
-              </button>
-            </li>
+          
             <li>
               <button onClick={() => handleLinkClick('departments')} className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300">
                 <i className="fas fa-cogs mr-2"></i> Departments
@@ -248,42 +271,47 @@ export default function AdminDashboard() {
         </nav>
       </div>
 
-      <div className="flex-1 flex flex-col ml-0 lg:ml-64">
-        <header className="bg-blue-600 text-white p-6 fixed lg:static top-0 left-0 right-0 z-10">
-          <div className="flex justify-between items-center">
-            <div className="text-xl font-bold">Admin Dashboard</div>
-            <div className="flex items-center space-x-4 w-full max-w-md">
-              <input
-                type="text"
-                placeholder="Search by CNIC or Phone"
-                className="border border-gray-300 text-black rounded px-4 py-2 w-full sm:w-64 lg:w-96 transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none"
-                value={searchTerm}
-                onChange={(e) => setSearchTerm(e.target.value)}
-              />
-              <button
-                className="bg-blue-950 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200"
-                onClick={handleSearch}
-              >
-                Search
-              </button>
-            </div>
-          </div>
-        </header>
-
-        <main className="flex-1 overflow-y-auto mt-[4.5rem] p-6 relative">
-          <div className="fixed top-[4.5rem] left-0 right-0 lg:left-64 lg:w-auto w-full h-[calc(100vh-4.5rem)] overflow-y-auto bg-white shadow p-4">
+      <div className="flex-1 flex flex-col ml-0 lg:ml-">
+       <header className="bg-blue-600 text-white p-7 fixed top-0 left- lg:left-0 w-full z-50 ">
+  <div className="flex justify-between items-center">
+    <div className="text-xl font-bold">Admin Dashboard</div>
+    <div className="flex items-center space-x-4 w-full max-w-md">
+      <input
+        type="text"
+        placeholder="Search by CNIC or Phone"
+        className="border border-gray-300 text-black rounded px-4 py-2 w-full sm:w-64 lg:w-96 transition duration-300 ease-in-out focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        value={searchTerm}
+        onChange={(e) => setSearchTerm(e.target.value)}
+      />
+      <button
+        className="bg-blue-950 text-white px-4 py-2 rounded hover:bg-blue-700 transition duration-200"
+        onClick={handleSearch}
+      >
+        Search
+      </button>
+    </div>
+  </div>
+</header>
+        <main className="flex-1 overflow-y-auto mt-96 p-6 relative">
+          <div className="fixed top-[4.5rem] left-0 right-0 lg:left-64 lg:w-auto w-full h-[calc(100vh-4.5rem)] overflow-y-auto bg-white shadow p-4 mt-5">
             {activeComponent === 'default' && (
               <div>
-                <div className="bg-white p-4 shadow flex gap-5 items-center mb-6">
-                  <button className="bg-blue-600 text-white px-4 py-2 rounded">Add new post</button>
-                  <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded">All customers</button>
-                  <button className="bg-gray-200 text-gray-800 px-4 py-2 rounded">Settings</button>
+                <div className="bg-white p-4 shadow flex gap-5 items-center mb-6 sm:">
+                  <button className="bg-blue-600 text-white px-3 py-2 rounded">AddUser</button>
+                  <button className="bg-gray-200 text-gray-800 px-2 py-2 rounded">Allcustomers</button>
+                  <button className="bg-gray-200 text-gray-800 px-3 py-2 rounded">Settings</button>
                 </div>
 
                 <div className="p-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                   <div className="bg-white p-4 rounded-lg shadow-lg text-center">
-                    <div className="text-2xl font-bold">$2,456</div>
-                    <div className="text-gray-500">Total Sales</div>
+                  {ActiverUserDetail ? (
+                  <div className="text-2xl font-bold">
+                 {ActiverUserDetail.length > 0 ? ActiverUserDetail.length : 0}
+              </div>
+         ) : (
+            <div className="text-gray-500">Loading...</div>
+              )}
+                    <div className="text-gray-500">Active Users</div>
                   </div>
                   <div className="bg-white p-4 rounded-lg shadow-lg text-center">
                     <div className="text-2xl font-bold">$1,000</div>
@@ -340,8 +368,7 @@ export default function AdminDashboard() {
               </div>
             )}
 
-            {activeComponent === 'customers' && <Customer />}
-            {activeComponent === 'manageusers' && <ManageUser />}
+             {activeComponent === 'manageusers' && <ManageUser />}
             {activeComponent === 'departments' && <StaffForm />}
           </div>
         </main>
