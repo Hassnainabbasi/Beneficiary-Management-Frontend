@@ -77,7 +77,7 @@ const fetchAllInfo = async () => {
   }, []);
 
   return (
-    <div className="h-screen flex flex-col lg:flex-row overflow-hidden">
+    <div className="h-screen flex flex-col lg:flex-row overflow-y-auto">
       <div
         className={`${
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
@@ -115,27 +115,24 @@ const fetchAllInfo = async () => {
       </div>
 
       <button
-        className="bg-blue-600 text-white p-2 fixed top-6 left-1 z-50 rounded-full lg:hidden"
+        className="bg-blue-600 text-white p-2 fixed top-6 left z-50 rounded-full lg:hidden"
         
      onClick={() => setIsSidebarOpen(!isSidebarOpen)}
       >
         {isSidebarOpen ? (
-         <MenuIcon/>
+         <MenuIcon size={20} />
         ) : (
-          <MenuIcon/>
+          <MenuIcon size={20}/>
          )}
       </button>
 
       <div className="flex-1 flex flex-col">
         <header className="bg-blue-600 text-white px-4 p-2 fixed top-0 left-0 w-full z-40">
           <div className="flex justify-between items-center">
-          {/* {!isSidebarOpen && (
-            <MenuIcon />
-            )} */}
             {isSidebarOpen && (
             <MenuIcon onClick={() => setIsSidebarOpen(!isSidebarOpen)}/>
             )}
-        <svg xmlns="http://www.w3.org/2000/svg" width="150" height="80" viewBox="0 0 200 200">
+        <svg xmlns="http://www.w3.org/2000/svg" width="190" height="80" viewBox="0 0 200 200">
             <circle cx="100" cy="100" r="95" fill="#1a73e8" stroke="#f1f1f1" stroke-width="7"/>
             <text x="50%" y="50%" text-anchor="middle" fill="#ffffff" font-family="Arial, sans-serif" font-size="38px" font-weight="bold" dy=".3em">
               Sayalani
@@ -156,10 +153,10 @@ const fetchAllInfo = async () => {
           </div>
         </header>
 
-        <main className="flex-1 overflow-y-auto mt-20 p-6">
+        <main className="flex-1 overflow-y-auto mt-20 p-6 h-full">
           {activeComponent === "default" && (
              <div>
-             <div className="bg-white p-4 shadow flex gap-5 items-center mb-6 sm:">
+             <div className="bg-white p-4 shadow flex gap-5 items-center mb-6">
                 <button className="bg-blue-600 text-white px-2 py-2 rounded">AddUser</button>
                 <button className="bg-gray-200 text-gray-800 px-2 py-2 rounded">Allcustomers</button>
                 <button className="bg-gray-200 text-gray-800 px-3 py-2 rounded">Settings</button>
