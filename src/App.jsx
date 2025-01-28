@@ -16,7 +16,7 @@ export default function App() {
         <Route path="/reception" element={<Reception />} />
         <Route path="/departmentStaff" element={<StaffForm />} />
           </Routes>
-          <Footer />
+          {/* <Footer /> */}
     </BrowserRouter>
 
   );
