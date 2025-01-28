@@ -3,8 +3,9 @@ import React, { useEffect, useState } from "react";
 import StaffForm from "../pages/departmentStaff/department";
 import { BASE_URL } from "../constants";
 import ManageUser from "./ManageUser";
-import { Menu, MenuIcon, ToggleLeftIcon, ToggleRight } from "lucide-react";
+import { Home, HomeIcon, Menu, MenuIcon, ToggleLeftIcon, ToggleRight, UserIcon } from "lucide-react";
 import { BsMenuUp } from "react-icons/bs";
+import "font-awesome/css/font-awesome.min.css"; // Make sure Font Awesome is imported
 
 export default function AdminDashboard() {
   const [activeComponent, setActiveComponent] = useState("default");
@@ -83,32 +84,33 @@ const fetchAllInfo = async () => {
           isSidebarOpen ? "translate-x-0" : "-translate-x-full"
         } bg-gray-900 text-white w-64 p-4 fixed lg:static top-0 left-0 h-full transform transition-transform duration-300 lg:translate-x-0 lg:w-64 mt-24`}
       >
-        <div className="text-2xl font-bold mb-6">Admin Dashboard</div>
+        <div className="text-2xl font-bold mb-8">Admin Dashboard</div>
         <nav>
           <ul className="space-y-4">
             <li>
               <button
                 onClick={() => handleLinkClick("default")}
-                className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300"
+                className="flex items-center text-lg font-semibold hover:text-blue-500 transition mb-8 duration-300"
               >
-                <i className="fas fa-users mr-2"></i> Overview
+                <Home className="mr-2"> </Home> Overview
               </button>
             </li>
-            <li>
+            <li className="">
               <button
                 onClick={() => handleLinkClick("departments")}
-                className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300"
+                className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300 mb-8"
               >
-                <i className="fas fa-cogs mr-2"></i> Departments
+               <i className="fa fa-th-large mr-3" /> Department Staff
+                                
               </button>
             </li>
-            <li>
+            <li className="">
               <button
                 onClick={() => handleLinkClick("manageusers")}
-                className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300"
+                className="flex items-center text-lg font-semibold hover:text-blue-500 transition duration-300 mb-8"
               >
-                <i className="fas fa-users-cog mr-2"></i> Manage Users
-              </button>
+               <UserIcon className="mr-2"/>Manage User
+                 </button>
             </li>
           </ul>
         </nav>
