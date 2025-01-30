@@ -484,7 +484,7 @@ function HomePage() {
     </button>
 
     {/* Main Content Wrapper */}
-    <div className="w-full block">
+    {/* <div className="w-full block">
         <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-gray-800 mb-4 lg:mb-6 w-full">
             Welcome to the <span className="text-green-500">Saylani</span> Welfare Non-Governmental Organization in Pakistan
         </h1>
@@ -500,10 +500,10 @@ function HomePage() {
                 Explore More <i className="fa fa-arrow-right ml-2"></i>
             </button>
         </div>
-    </div>
+    </div> */}
 
     {/* Image Section */}
-    <div className="mt-8 flex justify-center sm:justify-start w-full">
+    {/* <div className="mt-8 flex justify-center sm:justify-start w-full">
         {loading ? (
             skeleton
         ) : (
@@ -513,7 +513,7 @@ function HomePage() {
                 className="rounded-xl shadow-lg w-full sm:w-3/4 md:w-1/2 lg:w-full object-cover"
             />
         )}
-    </div>
+    </div> */}
 </main>
 
                     </div>

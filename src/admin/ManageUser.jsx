@@ -228,7 +228,7 @@ export default function ManageUser() {
   };
 
   return (
-    <div className="bg-white p-4 rounded-lg shadow-md mt-6">
+    <div className="bg-white p-4 rounded-lg shadow-md mt-6 w-full h-screen">
       <div className="text-lg font-bold mb-4">Users Table</div>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white rounded-lg shadow-md">

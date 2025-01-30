@@ -1,21 +1,21 @@
 import { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { BASE_URL } from "../../constants";
 
 const Reception = () => {
   const generateToken = () => Math.floor(1000 + Math.random() * 9000);
-  const [results , setResults] = useState('')
+  const [results, setResults] = useState("");
   const [formData, setFormData] = useState({
     cnic: "",
     name: "",
     phone: "",
     address: "",
     purpose: "",
-    tokenNo :  generateToken()
+    tokenNo: generateToken(),
   });
-   
-  const navigate = useNavigate()
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -36,11 +36,11 @@ const Reception = () => {
 
       const result = await response.json();
       console.log("result==>>", result);
-       setResults(result)
+      setResults(result);
       if (response.ok) {
         Swal.fire("User registered successfully!");
         console.log("Registered User:", result.name);
-  } else {
+      } else {
         Swal.fire(result.message);
       }
     } catch (error) {
@@ -48,8 +48,6 @@ const Reception = () => {
       Swal.fire("Server error. Please try again later.");
     }
   };
-
-  
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -59,9 +57,9 @@ const Reception = () => {
   const handleSelectChange = (e) => {
     setFormData({ ...formData, purpose: e.target.value });
   };
-  
+
   return (
-    <div className="max-w-xl mx-auto mt-8 p-4 border rounded-lg shadow-md">
+    <div className="w-96 mx-auto mt-8 p-4 border rounded-lg shadow-md">
       <h1 className="text-xl font-bold mb-4">Reception Desk</h1>
       <div className="mb-4">
         <label className="block text-sm font-medium text-gray-700">CNIC</label>
@@ -80,7 +78,9 @@ const Reception = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Full Name</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Full Name
+        </label>
         <input
           type="text"
           name="name"
@@ -91,7 +91,9 @@ const Reception = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Phone Number</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Phone Number
+        </label>
         <input
           type="text"
           name="phone"
@@ -102,7 +104,9 @@ const Reception = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Address</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Address
+        </label>
         <input
           type="text"
           name="address"
@@ -113,7 +117,9 @@ const Reception = () => {
         />
       </div>
       <div className="mb-4">
-        <label className="block text-sm font-medium text-gray-700">Purpose of Visit</label>
+        <label className="block text-sm font-medium text-gray-700">
+          Purpose of Visit
+        </label>
         <select
           name="purpose"
           value={formData.purpose}
@@ -129,17 +135,17 @@ const Reception = () => {
         </select>
       </div>
 
-       <button
+      <button
         onClick={handleSubmit}
         className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600"
       >
         Generate Token
       </button>
       {results && (
-         <div className="mt-4 bg-green-100 p-4 rounded text-center">
-         {results.user.tokenNo}
-       </div>
-        )}
+        <div className="mt-4 bg-green-100 p-4 rounded text-center">
+          {results.user.tokenNo}
+        </div>
+      )}
     </div>
   );
 };
