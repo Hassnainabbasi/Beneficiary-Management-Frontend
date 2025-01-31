@@ -107,44 +107,44 @@
 //               <div className="text-gray-500">Total Users</div>
 //             </div>
 //           </div>
-// <div className="bg-white p-4 shadow rounded-lg">
-//   <div className="text-lg font-bold mb-4">Users Table</div>
-//   <div className="overflow-x-auto overflow-y-auto">
-//     <table className="min-w-full bg-white rounded-lg shadow-md">
-//       <thead>
-//         <tr className="bg-gray-100">
-//           <th className="py-3 px-4 text-left text-gray-700">Name</th>
-//           <th className="py-3 px-4 text-left text-gray-700">CNIC</th>
-//           <th className="py-3 px-4 text-left text-gray-700">Phone</th>
-//           <th className="py-3 px-4 text-left text-gray-700">Address</th>
-//           <th className="py-3 px-4 text-left text-gray-700">Purpose</th>
-//           <th className="py-3 px-4 text-left text-gray-700">Token No</th>
-//         </tr>
-//       </thead>
-//       <tbody>
-//         {detail.length > 0 ? (
-//           detail.map((user, index) => (
-//             <tr key={index} className="border-b hover:bg-gray-50">
-//               <td className="py-3 px-4">{user.name}</td>
-//               <td className="py-3 px-4">{user.cnic}</td>
-//               <td className="py-3 px-4">{user.phone}</td>
-//               <td className="py-3 px-4">{user.address}</td>
-//               <td className="py-3 px-4">{user.purpose}</td>
-//               <td className="py-3 px-4">{user.tokenNo}</td>
-//             </tr>
-//           ))
-//         ) : (
-//           <tr>
-//             <td colSpan="6" className="py-4 text-center">
-//               No data found
-//             </td>
-//           </tr>
-//         )}
-//       </tbody>
-//     </table>
-//   </div>
-//         </div>
-//       </div>
+{/* <div className="bg-white p-4 shadow rounded-lg">
+  <div className="text-lg font-bold mb-4">Users Table</div>
+  <div className="overflow-x-auto overflow-y-auto">
+    <table className="min-w-full bg-white rounded-lg shadow-md">
+      <thead>
+        <tr className="bg-gray-100">
+          <th className="py-3 px-4 text-left text-gray-700">Name</th>
+          <th className="py-3 px-4 text-left text-gray-700">CNIC</th>
+          <th className="py-3 px-4 text-left text-gray-700">Phone</th>
+          <th className="py-3 px-4 text-left text-gray-700">Address</th>
+          <th className="py-3 px-4 text-left text-gray-700">Purpose</th>
+          <th className="py-3 px-4 text-left text-gray-700">Token No</th>
+        </tr>
+      </thead>
+      <tbody>
+        {detail.length > 0 ? (
+          detail.map((user, index) => (
+            <tr key={index} className="border-b hover:bg-gray-50">
+              <td className="py-3 px-4">{user.name}</td>
+              <td className="py-3 px-4">{user.cnic}</td>
+              <td className="py-3 px-4">{user.phone}</td>
+              <td className="py-3 px-4">{user.address}</td>
+              <td className="py-3 px-4">{user.purpose}</td>
+              <td className="py-3 px-4">{user.tokenNo}</td>
+            </tr>
+          ))
+        ) : (
+          <tr>
+            <td colSpan="6" className="py-4 text-center">
+              No data found
+            </td>
+          </tr>
+        )}
+      </tbody>
+    </table>
+  </div>
+        </div> */}
+      // </div>
 //       )}
 //       {activeComponent === "manageusers" && <ManageUser />}
 //       {activeComponent === "departments" && <StaffForm />}
@@ -154,24 +154,14 @@
 
 import React, { useEffect, useState } from "react";
 import StaffForm from "../pages/departmentStaff/department";
-import { BASE_URL } from "../constants";
+import { BASE_URL } from "../constants.js";
 import ManageUser from "./ManageUser";
 import {
   CalendarIcon,
   Home,
-  HomeIcon,
-  Menu,
-  MenuIcon,
   MessageCircleCode,
   Mic,
-  Mic2,
-  Mic2Icon,
-  MicOff,
-  MicVocal,
-  Speaker,
-  ToggleLeftIcon,
-  ToggleRight,
-  UserIcon,
+
   UserPlus,
 } from "lucide-react";
 import { BsList, BsMenuUp } from "react-icons/bs";
@@ -183,6 +173,7 @@ import Reception from "../pages/reception/reception";
 import CommentSection from "./CommentSection";
 import Reports from "./Reports";
 import Announcement from "./Announcement";
+import SearchCustomer from "./SearchCustomer";
 
 export default function AdminDashboard() {
   const [activeComponent, setActiveComponent] = useState("default");
@@ -225,8 +216,8 @@ export default function AdminDashboard() {
       });
       const result = await response.json();
       if (response.ok) {
-        setOriginalDetail(result.users); // Store the original data
-        setDetail(result.users); // Initialize display data
+        setOriginalDetail(result.users); 
+        setDetail(result.users); 
       } else {
         console.error("Failed to fetch users");
       }
@@ -281,6 +272,7 @@ export default function AdminDashboard() {
             >
               <CalendarIcon className="mr-2" /> Receptions
             </button>
+           
             <button
               className="flex items-center text-lg font-semibold focus:bg-white p-2 focus:text-blue-500 rounded-md hover:text-blue-500 transition px-4 mb-4 duration-300"
               onClick={() => handleLinkClick("manageusers")}
@@ -518,6 +510,7 @@ export default function AdminDashboard() {
       )}
       {activeComponent === "announcement" && <Announcement />}
       {activeComponent === "comments" && <CommentSection />}
+      {/* {activeComponent === "searchcutomer" && <SearchCustomer />} */}
     </div>
   );
 }
